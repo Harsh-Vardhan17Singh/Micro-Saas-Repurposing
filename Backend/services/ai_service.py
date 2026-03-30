@@ -1,6 +1,6 @@
 import requests
 
-API_KEY = "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"
+API_KEY = "Your API Key"
 
 def generate_content(text):
     url = "https://openrouter.ai/api/v1/chat/completions"

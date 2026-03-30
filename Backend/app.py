@@ -1,4 +1,5 @@
 from flask import Flask,request,jsonify
+from services.ai_service import generate_content
 
 
 
@@ -26,14 +27,14 @@ def generate():
     print("Received text",text)
 
     #3.get Dummy data
-    response = (f"Your text:{text}")
+    ai_output = generate_content(text)
 
     # 4.return jsonify
     
     return jsonify({
-        "twitter":response,
-        "linkedin":response,
-        "summary":response
+        "twitter":ai_output,
+        "linkedin":ai_output,
+        "summary":ai_output
     
     }) 
     

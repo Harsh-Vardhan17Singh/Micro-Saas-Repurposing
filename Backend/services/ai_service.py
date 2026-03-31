@@ -1,6 +1,10 @@
+from dotenv import load_dotenv
+import os
 import requests
 
-API_KEY = "Your API Key"
+load_dotenv()
+
+API_KEY=os.getenv("OPENROUTER_API_KEY")
 
 def generate_content(text):
     url = "https://openrouter.ai/api/v1/chat/completions"
@@ -19,16 +23,21 @@ def generate_content(text):
                  2. LinkedIn post
                  3. Short Summary
 
-                 Return output in this format:
+                 STRICT RULES:
+                 - DO NOT add any extra text
+                 - DO NOT add "Here is My output"
+                 - Follow EXACT format below
+
+                FORMAT:
 
                  TWITTER:
-                 <content>
+                 <Only twitter threads>
 
                  LINKEDIN:
-                 <content>
+                 <Only Linkedin post>
 
                  SUMMARY:
-                 <content>
+                 <only summary>
 
                  Transcript : 
                  {text}
@@ -47,19 +56,29 @@ def generate_content(text):
     if "choices" not in data:
         return f"API Error:{data}"
     
+    def parse_response(text):
+        try:
+            twitter = text.split("TWITTER:")[1].split("LINKEDIN:")[0].strip()
+            linkedin = text.split("LINKEDIN:")[1].split("SUMMARY:")[0].strip()
+            summary = text.split("SUMMARY:")[1].strip()
+
+
+            return {
+            "twitter": twitter,
+            "linkedin":linkedin,
+            "summary":summary
+            }
+        except Exception as e:
+            return {
+                "error":"Parsing Failed",
+                "raw":text
+            }
+    
+    
     reply = data["choices"][0]["message"]["content"]
 
-    def parse_response(text):
-        twitter_part = reply.split("LINKEDIN:")[0]
-        linkedin_part = reply.split("LINKEDIN:")[1].split("SUMMARY:")[0]
-        summary_part = reply.split("SUMMARY:")[1]
+    parsed = parse_response(reply)
 
-        return {
-            "Twitter": twitter_part,
-            "Linkedin":linkedin_part,
-            "Summary":summary_part
-        }
-
-    return reply
+    return parsed
 
 

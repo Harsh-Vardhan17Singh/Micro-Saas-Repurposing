@@ -31,12 +31,7 @@ def generate():
 
     # 4.return jsonify
     
-    return jsonify({
-        "twitter":ai_output,
-        "linkedin":ai_output,
-        "summary":ai_output
-    
-    }) 
+    return jsonify (ai_output)
     
     
 

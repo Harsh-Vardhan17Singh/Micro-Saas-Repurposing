@@ -4,7 +4,7 @@ import requests
 
 load_dotenv()
 
-API_KEY=os.getenv("OPENROUTER_API_KEY")
+API_KEY=os.getenv("OPENROUTE_API_KEY")
 
 def generate_content(text):
     url = "https://openrouter.ai/api/v1/chat/completions"

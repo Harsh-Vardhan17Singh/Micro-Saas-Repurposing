@@ -1,12 +1,13 @@
+
 from dotenv import load_dotenv
 import os
 import requests
 
 load_dotenv()
 
-API_KEY=os.getenv("OPENROUTE_API_KEY")
+API_KEY=os.getenv("OPENROUTER_API_KEY")
 
-def generate_content(text):
+def generate_content(text,tone):
     url = "https://openrouter.ai/api/v1/chat/completions"
     
     headers = {
@@ -23,7 +24,13 @@ def generate_content(text):
                  2. LinkedIn post
                  3. Short Summary
 
+                 Tone:{tone}
+
                  STRICT RULES:
+                 -Adapt writing style based on tone:
+                   - professional → formal, clean
+                   - casual → friendly, conversational
+                   - viral → catchy, engaging, hook-based
                  - DO NOT add any extra text
                  - DO NOT add "Here is My output"
                  - Follow EXACT format below
@@ -31,13 +38,23 @@ def generate_content(text):
                 FORMAT:
 
                  TWITTER:
-                 <Only twitter threads>
+                 (tweet 1)
+                 (tweet 2)
+                 (tweet 3)
+                 (tweet 4)
+                 (tweet 5)
 
                  LINKEDIN:
-                 <Only Linkedin post>
+                 (single paragraph)
 
                  SUMMARY:
-                 <only summary>
+                 (5-6 lines)
+
+                 IMPORTANT:
+                    - DO NOT use ** or markdown
+                    - DO NOT write "TWITTER THREAD"
+                    - DO NOT change headings
+                    - headings must be EXACTLY: TWITTER:, LINKEDIN:, SUMMARY:
 
                  Transcript : 
                  {text}
@@ -57,28 +74,44 @@ def generate_content(text):
         return f"API Error:{data}"
     
     def parse_response(text):
-        try:
-            twitter = text.split("TWITTER:")[1].split("LINKEDIN:")[0].strip()
-            linkedin = text.split("LINKEDIN:")[1].split("SUMMARY:")[0].strip()
-            summary = text.split("SUMMARY:")[1].strip()
+     try:
+        clean = text.replace("**", "").strip()
 
+        # Split by headings instead of regex
+        parts = clean.split("LINKEDIN:")
+        
+        if len(parts) < 2:
+            return {"error": "Format mismatch", "raw": text}
 
-            return {
-            "twitter": twitter,
-            "linkedin":linkedin,
-            "summary":summary
-            }
-        except Exception as e:
-            return {
-                "error":"Parsing Failed",
-                "raw":text
-            }
-    
-    
+        twitter_part = parts[0].replace("TWITTER:", "").strip()
+
+        remaining = parts[1].split("SUMMARY:")
+        
+        if len(remaining) < 2:
+            return {"error": "Format mismatch", "raw": text}
+
+        linkedin_part = remaining[0].strip()
+        summary_part = remaining[1].strip()
+
+        return {
+            "twitter": twitter_part,
+            "linkedin": linkedin_part,
+            "summary": summary_part
+        }
+
+     except Exception:
+        return {
+            "error": "Parsing Failed",
+            "raw": text
+        }
+     
     reply = data["choices"][0]["message"]["content"]
 
     parsed = parse_response(reply)
 
     return parsed
+
+
+  
 
 

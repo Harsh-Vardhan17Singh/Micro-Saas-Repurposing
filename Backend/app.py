@@ -1,9 +1,10 @@
 from flask import Flask,request,jsonify
 from services.ai_service import generate_content
-
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def home():
@@ -21,13 +22,15 @@ def generate():
         })
     
     text = data.get("text")
+
+    tone = data.get("tone","professional")
     
     
     #2.Print Data
     print("Received text",text)
 
     #3.get Dummy data
-    ai_output = generate_content(text)
+    ai_output = generate_content(text,tone)
 
     # 4.return jsonify
     

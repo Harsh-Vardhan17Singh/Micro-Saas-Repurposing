@@ -24,13 +24,15 @@ def generate():
     text = data.get("text")
 
     tone = data.get("tone","professional")
+
+    format = data.get("format","social")
     
     
     #2.Print Data
     print("Received text",text)
 
     #3.get Dummy data
-    ai_output = generate_content(text,tone)
+    ai_output = generate_content(text,tone,format)
 
     # 4.return jsonify
     

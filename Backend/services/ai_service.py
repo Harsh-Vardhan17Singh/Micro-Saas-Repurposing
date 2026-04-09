@@ -7,7 +7,7 @@ load_dotenv()
 
 API_KEY=os.getenv("OPENROUTER_API_KEY")
 
-def generate_content(text,tone):
+def generate_content(text,tone,format):
     url = "https://openrouter.ai/api/v1/chat/completions"
     
     headers = {
@@ -19,49 +19,65 @@ def generate_content(text,tone):
         "messages":[
             {
                 "role":"user",
-                "content": f"""Convert this podcast transcript into:
-                 1. Twitter thread (5 tweets)
-                 2. LinkedIn post
-                 3. Short Summary
+                "content":f"""
+                You are an AI content repurposer.
+                FORMAT:{format}
+                TONE:{tone}
 
-                 Tone:{tone}
+                RULES:
+                -Do not add extra text
+                -Do not use markdown(**)
+                -follow EXACT structure
+                -Clean output only
 
-                 STRICT RULES:
-                 -Adapt writing style based on tone:
-                   - professional → formal, clean
-                   - casual → friendly, conversational
-                   - viral → catchy, engaging, hook-based
-                 - DO NOT add any extra text
-                 - DO NOT add "Here is My output"
-                 - Follow EXACT format below
+                -----------------------------
 
-                FORMAT:
+                If format = "social":
+                
+                Return EXACTLY:
 
-                 TWITTER:
-                 (tweet 1)
-                 (tweet 2)
-                 (tweet 3)
-                 (tweet 4)
-                 (tweet 5)
+                TWITTER:
+                (tweet 1)
+                (tweet 2)
+                (tweet 3)
+                (tweet 4)
+                (tweet 5)
 
-                 LINKEDIN:
-                 (single paragraph)
+                LINKEDIN:
+                (single Paragraph)
 
-                 SUMMARY:
-                 (5-6 lines)
+                SUMMARY:
+                (5-6 lines)
 
-                 IMPORTANT:
-                    - DO NOT use ** or markdown
-                    - DO NOT write "TWITTER THREAD"
-                    - DO NOT change headings
-                    - headings must be EXACTLY: TWITTER:, LINKEDIN:, SUMMARY:
+                ----------------------------
 
-                 Transcript : 
-                 {text}
-                """
+                If Format = "email":
+
+                Return EXACTLY:
+                
+                EMAIL:
+                Subject:<subject line>
+
+                Body:<email content>
+                
+                ----------------------------
+
+                If format = "instagram":
+                Return EXACTLY :
+
+                CAPTION:
+                <engaging Caption>
+
+                HASHTAGS:
+                #tag1  #tag2  #tag3  #tag4  #tag5
+
+                -----------------------------
+                CONTENT:
+                {text}"""
             }
         ]
     }
+
 
     response = requests.post(url,headers=headers,json=data)
 
@@ -106,6 +122,23 @@ def generate_content(text,tone):
         }
      
     reply = data["choices"][0]["message"]["content"]
+
+#  ADDING FORMAT FOR EMAIL AND  INSTAGRAM TAGS
+
+    if format == "email":
+       return{"email":reply}
+    
+    if format == "instagram":
+       #spliting caption + hashtags
+       parts = reply.split("HASHTAGS:")
+       caption = parts[0].replace("CAPTION:","").strip()
+       hashtags = parts[1].split()  if len(parts) > 1 else ""
+
+       return{
+          "caption":caption,
+          "hashtags":hashtags
+       }
+      
 
     parsed = parse_response(reply)
 

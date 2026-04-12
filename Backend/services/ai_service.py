@@ -90,33 +90,34 @@ def generate_content(text,tone,format):
         return f"API Error:{data}"
     
     def parse_response(text):
-     try:
-        clean = text.replace("**", "").strip()
+        try:
+          clean = text.replace("**", "").strip()
 
         # Split by headings instead of regex
-        parts = clean.split("LINKEDIN:")
+          parts = clean.split("LINKEDIN:")
         
-        if len(parts) < 2:
-            return {"error": "Format mismatch", "raw": text}
+          if len(parts) < 2:
+             return {"error": "Format mismatch", "raw": text}
 
-        twitter_part = parts[0].replace("TWITTER:", "").strip()
+          twitter_part = parts[0].replace("TWITTER:", "").strip().split("\n")
+          twitter_part = [t.strip() for t in twitter_part if t.strip()]
 
-        remaining = parts[1].split("SUMMARY:")
+          remaining = parts[1].split("SUMMARY:")
         
-        if len(remaining) < 2:
-            return {"error": "Format mismatch", "raw": text}
+          if len(remaining) < 2:
+             return {"error": "Format mismatch", "raw": text}
 
-        linkedin_part = remaining[0].strip()
-        summary_part = remaining[1].strip()
+          linkedin_part = remaining[0].strip()
+          summary_part = remaining[1].strip()
 
-        return {
+          return {
             "twitter": twitter_part,
             "linkedin": linkedin_part,
             "summary": summary_part
-        }
+         }
 
-     except Exception:
-        return {
+        except Exception:
+         return {
             "error": "Parsing Failed",
             "raw": text
         }
@@ -132,11 +133,11 @@ def generate_content(text,tone,format):
        #spliting caption + hashtags
        parts = reply.split("HASHTAGS:")
        caption = parts[0].replace("CAPTION:","").strip()
-       hashtags = parts[1].split()  if len(parts) > 1 else ""
+       hashtags = parts[1].strip()  if len(parts) > 1 else ""
 
        return{
-          "caption":caption,
-          "hashtags":hashtags
+          "CAPTION":caption,
+          "HASHTAGS":hashtags
        }
       
 

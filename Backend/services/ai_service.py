@@ -20,15 +20,18 @@ def generate_content(text,tone,format):
             {
                 "role":"user",
                 "content":f"""
-                You are an AI content repurposer.
+                You are a strict API.You only returns structured output.
                 FORMAT:{format}
                 TONE:{tone}
 
-                RULES:
+                IMPORTANT RULES:
+                -output Must Follow format EXACTLY 
                 -Do not add extra text
                 -Do not use markdown(**)
                 -follow EXACT structure
+                -NO additional section
                 -Clean output only
+                -if Wrong Format -> Response is   Invalid
 
                 -----------------------------
 
@@ -72,6 +75,14 @@ def generate_content(text,tone,format):
                 #tag1  #tag2  #tag3  #tag4  #tag5
 
                 -----------------------------
+                If mode == improve:
+                Rewrite content to be:
+                - more engaging 
+                - stronger hook
+                - shorter sentences
+                - more viral
+
+
                 CONTENT:
                 {text}"""
             }
@@ -99,8 +110,11 @@ def generate_content(text,tone,format):
           if len(parts) < 2:
              return {"error": "Format mismatch", "raw": text}
 
-          twitter_part = parts[0].replace("TWITTER:", "").strip().split("\n")
-          twitter_part = [t.strip() for t in twitter_part if t.strip()]
+          twitter_raw = parts[0].replace("TWITTER:","").strip()
+
+          twitter_part = [t.strip() for t in twitter_raw.split("\n")
+                          if t.strip() and not t.lower().startwith("tweet")
+                          ]
 
           remaining = parts[1].split("SUMMARY:")
         
@@ -127,18 +141,38 @@ def generate_content(text,tone,format):
 #  ADDING FORMAT FOR EMAIL AND  INSTAGRAM TAGS
 
     if format == "email":
-       return{"email":reply}
+       try:
+        clean = reply.replace("**","").strip()
+        subject = clean.split("SUBJECT:")[1].split("BODY:")[0].strip()
+        body = clean.split("BODY:")[1].strip()
+        return{
+           "subject":subject,
+           "body":body
+        }
+       except:
+          return {
+             "error":"Email parsing Failed",
+             "raw":reply
+          }
     
     if format == "instagram":
        #spliting caption + hashtags
-       parts = reply.split("HASHTAGS:")
-       caption = parts[0].replace("CAPTION:","").strip()
-       hashtags = parts[1].strip()  if len(parts) > 1 else ""
+      try:
+          clean = reply.replace("**","").strip()
 
-       return{
+          caption = clean.split("CAPTION:")[1].split("HASHTAGS:")[0].strip()
+          hashtags  = clean.split("HASHTAGS:")[1].strip()
+
+          return{
           "CAPTION":caption,
           "HASHTAGS":hashtags
        }
+      except:
+         return {
+            "error":"Instagram parsing Failed",
+            "raw":reply
+         }
+
       
 
     parsed = parse_response(reply)

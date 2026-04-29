@@ -7,8 +7,8 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
             user_id TEXT PRIMARY KEY,
-            usage INTEGER DEAFULT 0,
-            plane TEXT DEFAULT 'free'
+            usage INTEGER DEFAULT 0,
+            plan TEXT DEFAULT 'free'
                    )""")
     conn.commit()
     conn.close()
@@ -17,7 +17,7 @@ def get_user(user_id):
     conn = sqlite3.connect("user.db")
     cursor = conn.cursor()
 
-    cursor.execute("SELECT usage, plan FROM users WHERE user_id = ?",(user_id))
+    cursor.execute("SELECT usage, plan FROM users WHERE user_id = ?",(user_id,))
     user = cursor.fetchone()
 
     conn.close()
@@ -27,7 +27,7 @@ def create_user(user_id):
     conn = sqlite3.connect("user.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO users (user_id) VALUES (?)",(user_id))
+    cursor.execute("INSERT INTO users (user_id) VALUES (?)",(user_id,))
     conn.commit()
     conn.close()
 

@@ -15,6 +15,8 @@ def generate_content(text,tone,format):
        "Content-Type": "application/json"
     }
     data = {
+        "max_token":500,
+        "temperature":0.7,
         "model":"meta-llama/llama-3-8b-instruct",
         "messages":[
             {
@@ -59,9 +61,9 @@ def generate_content(text,tone,format):
                 Return EXACTLY:
                 
                 EMAIL:
-                Subject:<subject line>
+                SUBJECT:<subject line>
 
-                Body:<email content>
+                BODY:<email content>
                 
                 ----------------------------
 
@@ -90,30 +92,41 @@ def generate_content(text,tone,format):
     }
 
 
-    response = requests.post(url,headers=headers,json=data)
+    response = requests.post(
+       url,
+       headers=headers,
+       json=data,
+       timeout=20
+       )
+    if response.status_code != 200:
+       return{"error":"API request failed","raw":response.text}
 
     data = response.json()
 
     # extract reply
-    print(data)
+    print("AI Response received")
 
     if "choices" not in data:
         return f"API Error:{data}"
     
     def parse_response(text):
         try:
-          clean = text.replace("**", "").strip()
+          clean = text.replace("**", "").replace("\r","").strip()
 
         # Split by headings instead of regex
           parts = clean.split("LINKEDIN:")
         
           if len(parts) < 2:
-             return {"error": "Format mismatch", "raw": text}
+             return {
+                "twitter":[],
+                "linkedin":clean,
+                "summary":clean
+             }
 
           twitter_raw = parts[0].replace("TWITTER:","").strip()
 
           twitter_part = [t.strip() for t in twitter_raw.split("\n")
-                          if t.strip() and not t.lower().startwith("tweet")
+                          if t.strip() and not t.lower().startswith("tweet")
                           ]
 
           remaining = parts[1].split("SUMMARY:")
@@ -161,8 +174,7 @@ def generate_content(text,tone,format):
           clean = reply.replace("**","").strip()
 
           caption = clean.split("CAPTION:")[1].split("HASHTAGS:")[0].strip()
-          hashtags  = clean.split("HASHTAGS:")[1].strip()
-
+          hashtags = "".join(clean.split("HASHTAGS:")[1].strip().split())
           return{
           "CAPTION":caption,
           "HASHTAGS":hashtags

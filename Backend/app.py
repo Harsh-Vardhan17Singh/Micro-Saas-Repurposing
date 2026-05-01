@@ -6,6 +6,8 @@ from database import init_db, get_user, create_user,update_usage
 app = Flask(__name__)
 CORS(app)
 
+init_db()
+
 FREE_LIMIT = 100 
 
 @app.route("/")
@@ -88,5 +90,4 @@ def generate():
 
 
 if __name__ == "__main__":
-    init_db()
-    app.run()
+    app.run(host="0.0.0.0",port=5000)

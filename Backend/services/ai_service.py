@@ -2,6 +2,7 @@
 from dotenv import load_dotenv
 import os
 import requests
+import re
 
 load_dotenv()
 
@@ -27,13 +28,16 @@ def generate_content(text,tone,format):
                 TONE:{tone}
 
                 IMPORTANT RULES:
-                -output Must Follow format EXACTLY 
+                -output Must Follow format EXACTLY
+                -do not include words like FORMAT, TONE , CONTENT
+                -Do not includes numbers like(1),(2)
+                -Each Tweet Must be a Clean sentence 
                 -Do not add extra text
                 -Do not use markdown(**)
                 -follow EXACT structure
                 -NO additional section
                 -Clean output only
-                -if Wrong Format -> Response is   Invalid
+                
 
                 -----------------------------
 
@@ -42,17 +46,24 @@ def generate_content(text,tone,format):
                 Return EXACTLY:
 
                 TWITTER:
-                (tweet 1)
-                (tweet 2)
-                (tweet 3)
-                (tweet 4)
-                (tweet 5)
+                Line 1:<Tweet 1>
+                Line 2:<Tweet 2>
+                Line 3:<tweet 3>
+                Line 4:<Tweet 4>
+                Line 5:<Tweet 5>
 
                 LINKEDIN:
                 (single Paragraph)
 
                 SUMMARY:
                 (5-6 lines)
+
+                IMPORTANT - 
+                1.ONLY THESE 3 SECTION
+                2.DO NOT INCLUDE EMAIL AND INSTAGRAM
+                3.DO NOT INCLUDE WORDS LIKE HOOK,FORMAT,INCLUDE,CONTENT
+                4.EACH TWEET MUST BE OF ONE LINE
+                5.EXACTLY 5 TWEETS
 
                 ----------------------------
 
@@ -64,6 +75,7 @@ def generate_content(text,tone,format):
                 SUBJECT:<subject line>
 
                 BODY:<email content>
+                (BODY SHOULD BE 6-7 LINES)
                 
                 ----------------------------
 
@@ -113,29 +125,59 @@ def generate_content(text,tone,format):
         try:
           clean = text.replace("**", "").replace("\r","").strip()
 
-        # Split by headings instead of regex
+        # Split main section 
           parts = clean.split("LINKEDIN:")
         
           if len(parts) < 2:
              return {
-                "twitter":[],
-                "linkedin":clean,
-                "summary":clean
+                "error":"Format Mismatch",
+                "raw":text
              }
-
+   # ----------------TWITTER----------------------
           twitter_raw = parts[0].replace("TWITTER:","").strip()
 
-          twitter_part = [t.strip() for t in twitter_raw.split("\n")
-                          if t.strip() and not t.lower().startswith("tweet")
-                          ]
+          lines = twitter_raw.split("\n")
 
+          clean_lines = []
+          for line in lines:
+             l = line.strip()
+
+             if not l:
+                continue
+             
+            #  remove garbage lines
+             if any(x in l.lower() for x in [
+                "format","tone","content","email","instagram","best hook"
+             ]):
+                continue
+             l = re.sub(r"^(line\s*\d+[:\-]|\d+[\.\)]\s*)", "", l, flags=re.IGNORECASE)
+
+             clean_lines.append(l)
+          twitter_part = clean_lines[:5] 
+
+             
+#  -----------------LINKEDIN + SUMMARY ------------
           remaining = parts[1].split("SUMMARY:")
         
           if len(remaining) < 2:
-             return {"error": "Format mismatch", "raw": text}
+             return {
+                "error": "Format mismatch", 
+                "raw": text}
 
           linkedin_part = remaining[0].strip()
           summary_part = remaining[1].strip()
+
+         #  CLEAN SUMMARY (IMPORTANT)
+          summary_part = summary_part.split("EMAIL:")[0]
+          summary_part = summary_part.split("INSTAGRAM:")[0]
+          summary_part = summary_part.strip()
+
+          if len(twitter_part) < 3:
+             return{
+                "error":"low quality output",
+                "raw":text
+
+             }
 
           return {
             "twitter": twitter_part,
@@ -150,6 +192,11 @@ def generate_content(text,tone,format):
         }
      
     reply = data["choices"][0]["message"]["content"]
+    if "TWITTER:" not in reply and format == "social":
+       return {
+          "error":"AI format mismatch",
+          "raw":reply
+       }
 
 #  ADDING FORMAT FOR EMAIL AND  INSTAGRAM TAGS
 
@@ -174,7 +221,7 @@ def generate_content(text,tone,format):
           clean = reply.replace("**","").strip()
 
           caption = clean.split("CAPTION:")[1].split("HASHTAGS:")[0].strip()
-          hashtags = "".join(clean.split("HASHTAGS:")[1].strip().split())
+          hashtags = clean.split("HASHTAGS:")[1].strip()
           return{
           "CAPTION":caption,
           "HASHTAGS":hashtags

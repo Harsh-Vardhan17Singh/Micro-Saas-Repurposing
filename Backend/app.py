@@ -6,7 +6,7 @@ from database import init_db, get_user, create_user,update_usage
 app = Flask(__name__)
 CORS(app)
 
-FREE_LIMIT = 3 
+FREE_LIMIT = 100 
 
 @app.route("/")
 def home():

@@ -87,6 +87,10 @@ def generate_content(text,tone,format):
     
      
     reply = data["choices"][0]["message"]["content"]
+
+    #clean markdown json blocks
+    reply = reply.replace("```json","").replace("```","").strip()
+    
     try:
        parsed = json.loads(reply)
        return parsed

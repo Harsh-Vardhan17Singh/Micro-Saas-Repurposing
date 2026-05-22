@@ -212,7 +212,7 @@ function App() {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Paste your podcast transcript here..."
+            placeholder="Paste your transcript here..."
           />
            
           <p className="char-count">{text.length} characters</p>

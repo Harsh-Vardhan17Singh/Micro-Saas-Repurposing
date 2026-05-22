@@ -231,7 +231,17 @@ function App() {
           </button>
         </div>
         {!result && !loading && (
-          <div className="empty">✨ Paste your content and click Generate to see magic</div>
+          <div className="empty">
+            <h3>✨ Tranform Your Content Into</h3>
+            <div className = "feature-list">
+              <p>🐦Twitter Threads</p>
+              <p>💼LinkedIn posts</p>
+              <p>📧Emails</p>
+              <p>📸Instagram Captions</p>
+            </div>
+
+            <span>Paste Your Transcript and generate in seconds</span>
+          </div>
         )}
         <div className="improve-btn">
               <button onClick={handleImprove} disabled = {loading ||(limit > 0 && usage >= limit )}>
@@ -241,7 +251,7 @@ function App() {
 
         {loading && (
           <div className="output">
-            <p> Generating Your Content ...</p>
+            <p className = "loading-text">⚡ Generating content...</p>
             <div className = "output-card skeleton"></div>
             <div className="output-card skeleton"></div>
             <div className="output-card skeleton"></div>

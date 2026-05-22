@@ -28,10 +28,24 @@ def generate_content(text,tone,format):
 
                 If format == "social":
                 {{
-                "twitter":["tweet1","tweet2","tweet3","tweet4","tweet5"],
-                "linkedin":"single paragraph",
-                "summary":"5-6 lines summary"
+                "twitter":["Tweet 1 wioth hook",
+                "Tweet 2 with insight",
+                "Tweet 3 with value",
+                "Tweet 4 with Example",
+                "Tweet 5 with CTA"],
+                "linkedin":"A paragraph Linkedin post (120-140 word)",
+                "summary":"A clean 5-6 lines summary"
                 }}
+
+                RULES FOR TWITTER:
+                - MUST generate exactly 5 tweets
+                - Each tweet must be different
+                - Each tweet should be 1-2 sentences
+                - No palceholder
+                - No "tweet1" text
+                - No repeated content 
+                - First tweet should have a strong hook
+                - last tweet should call to action 
 
                 ---------------------------
 
@@ -90,7 +104,7 @@ def generate_content(text,tone,format):
 
     #clean markdown json blocks
     reply = reply.replace("```json","").replace("```","").strip()
-    
+
     try:
        parsed = json.loads(reply)
        return parsed

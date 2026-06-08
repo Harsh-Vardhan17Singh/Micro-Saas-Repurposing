@@ -183,7 +183,7 @@ function App() {
         <div className="header">
           <h1 className="gradient-text">EchoStream</h1>
           <p className="subtitle">
-            Turn long content into social media in seconds
+            Turn podcasts,blog,videos and newsletter into high-performance Twitter threads, LinkedIn posts, emails and Instagram Caption
           </p>
         </div>
 

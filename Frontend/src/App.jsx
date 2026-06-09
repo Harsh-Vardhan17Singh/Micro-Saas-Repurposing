@@ -183,7 +183,8 @@ function App() {
         <div className="header">
           <h1 className="gradient-text">EchoStream</h1>
           <p className="subtitle">
-            Turn podcasts,blog,videos and newsletter into high-performance Twitter threads, LinkedIn posts, emails and Instagram Caption
+            Turn podcasts,blog,videos and newsletter into high-performance
+             Twitter threads, LinkedIn posts, emails and Instagram Caption
           </p>
         </div>
 
@@ -232,7 +233,9 @@ function App() {
         </div>
         {!result && !loading && (
           <div className="empty">
-            <h3>✨ Tranform Your Content Into</h3>
+            <h3>✨ Create content for every platform from one transcript
+              Paste a blog, podcasts transcript, newsletter or video script.
+            </h3>
             <div className = "feature-list">
               <p>🐦Twitter Threads</p>
               <p>💼LinkedIn posts</p>

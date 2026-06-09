@@ -18,7 +18,7 @@ def generate_content(text,tone,format):
     data = {
         "max_tokens":500,
         "temperature":0.7,
-        "model":"nvidia/nemotron-3.5-content-safety:free",
+        "model":"google/gemma-4-31b-it:free",
         "messages":[
             {
                 "role":"user",

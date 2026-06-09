@@ -42,8 +42,14 @@ h1 {
 }
 
 /* ✨ GRADIENT TEXT */
-.gradient-text {
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+.gradient-text{
+  background:none;
+  color:white;
+  font-size:4rem;
+  font-weight:800;
+  letter-spacing:-2px;
+  text-shadow:
+  0 0 30px rgba(139,92,246,0.4);
 }
 
 /* 📝 INPUT SECTION */

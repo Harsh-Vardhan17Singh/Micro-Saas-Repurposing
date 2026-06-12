@@ -1,123 +1,121 @@
-
 from dotenv import load_dotenv
 import os
-import requests
+import google.generativeai as genai
 import json
 
 load_dotenv()
 
-API_KEY=os.getenv("OPENROUTER_API_KEY")
+genai.configure(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
-def generate_content(text,tone,format):
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    
-    headers = {
-       "Authorization": f"Bearer {API_KEY}",
-       "Content-Type": "application/json"
-    }
-    data = {
-        "max_tokens":500,
-        "temperature":0.7,
-        "model":"nvidia/nemotron-3-ultra:free",
-        "messages":[
-            {
-                "role":"user",
-                "content":f"""
-                You are a Strict API.
-                Return ONLY valid JSON.
-
-                If format == "social":
-                {{
-                "twitter":["Tweet 1 wioth hook",
-                "Tweet 2 with insight",
-                "Tweet 3 with value",
-                "Tweet 4 with Example",
-                "Tweet 5 with CTA"],
-                "linkedin":"A paragraph Linkedin post (120-140 word)",
-                "summary":"A clean 5-6 lines summary"
-                }}
-
-                RULES FOR TWITTER:
-                - MUST generate exactly 5 tweets
-                - Each tweet must be different
-                - Each tweet should be 1-2 sentences
-                - No palceholder
-                - No "tweet1" text
-                - No repeated content 
-                - First tweet should have a strong hook
-                - last tweet should call to action 
-
-                ---------------------------
-
-                If format == "email":
-                {{
-                "subject":"email subject",
-                "body":"6-7 lines summary"
-                }}
-
-                ---------------------------
-                If format == "instagram":
-                {{
-                "caption":"engaging caption",
-                "hashtags":"#tag1 #tag2 #tag3 #tag4 #tag5"
-                }}
-
-                RULES:
-                -No extra text
-                -NO explanation
-                -No heading like TWITTER
-                -output must be valid JSON only
-                -Follow selected format strictly
-
-                -----------------------------
-               
-
-                FORMAT: {format}
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 
-                CONTENT:
-                {text}"""
-            }
-        ]
-    }
+def generate_content(text, tone, content_format):
+    prompt = f"""
+You are a Strict API.
 
+Return ONLY valid JSON.
 
-    response = requests.post(
-       url,
-       headers=headers,
-       json=data,
-       timeout=20
-       )
-    if response.status_code != 200:
-       return{"error":"API request failed","raw":response.text}
+If format == "social":
+{{
+  "twitter": [
+    "tweet1",
+    "tweet2",
+    "tweet3",
+    "tweet4",
+    "tweet5"
+  ],
+  "linkedin": "linkedin post",
+  "summary": "summary"
+}}
 
-    data = response.json()
+RULES FOR TWITTER:
+- Generate exactly 5 tweets
+- All tweets must be different
+- First tweet must be a hook
+- Last tweet must contain a CTA
+- No placeholders
+- No repeated content
 
-    # extract reply
-    print("AI Response received")
+---------------------------
 
-    if "choices" not in data:
-        return f"API Error:{data}"
-    
-     
-    reply = data["choices"][0]["message"]["content"]
+If format == "email":
+{{
+  "subject": "email subject",
+  "body": "email body"
+}}
 
-    #clean markdown json blocks
-    reply = reply.replace("```json","").replace("```","").strip()
+---------------------------
+
+If format == "instagram":
+{{
+  "caption": "instagram caption",
+  "hashtags": "#tag1 #tag2 #tag3 #tag4 #tag5"
+}}
+
+RULES:
+- Return valid JSON only
+- No markdown
+- No explanation
+- No headings
+- Follow selected format exactly
+
+FORMAT:
+{content_format}
+
+TONE:
+{tone}
+
+CONTENT:
+{text}
+"""
 
     try:
-       parsed = json.loads(reply)
-       return parsed
-    except Exception:
-       return{
-          "error":"Invalid JSON from AI",
-          "raw":reply
-       }
-       
-       
+        response = model.generate_content(
+            prompt,
+            generation_config={
+                "response_mime_type":"application/json"
+            }
+            )
 
+        reply = response.text.strip()
+        reply = (
+            reply.replace("```json", "")
+            .replace("```", "")
+            .strip()
+        )
 
+        parsed = json.loads(reply)
 
-  
+        # Validation for social format
+        if content_format == "social":
+            if "twitter" not in parsed:
+                return {
+                    "error": "Missing twitter array"
+                }
 
+            if not isinstance(parsed["twitter"], list):
+                return {
+                    "error": "Twitter field is not a list"
+                }
 
+            if len(parsed["twitter"]) != 5:
+                return {
+                    "error": "AI did not generate exactly 5 tweets",
+                    "raw": parsed
+                }
+
+        return parsed
+
+    except json.JSONDecodeError:
+        return {
+            "error": "Invalid JSON returned by model",
+            "raw": reply
+        }
+
+    except Exception as e:
+        return {
+            "error": str(e)
+        }

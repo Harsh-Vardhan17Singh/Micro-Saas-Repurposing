@@ -183,9 +183,16 @@ function App() {
         <div className="header">
           <h1 className="gradient-text">EchoStream</h1>
           <p className="subtitle">
-            Turn podcasts,blog,videos and newsletter into high-performance
-             Twitter threads, LinkedIn posts, emails and Instagram Caption
+            Turn podcasts,blog,videos and newsletters into ready-to-post social content in seconds.
           </p>
+          <div>
+            <div>⚡ 5 Formats</div>
+            <div>🚀 ~10 sec Generation</div>
+            <div>🤖 AI Powered</div>
+          </div>
+        </div>
+        <div className="beta-badge">
+           🚀 Beta Launch
         </div>
 
         {/* 📝 INPUT SECTION */}
@@ -224,19 +231,18 @@ function App() {
             Uses left:{Math.max(limit-usage,0)}/{limit || 0}
             </p>
 
-          <div>
+          <div className="button-group">
             <button
             onClick={handleGenerate}
             disabled={loading || !text.trim() || (limit > 0 && usage >= limit)}
           >
             {loading ? <span className="spinner"></span> : "Generate Content"}
           </button>
-          <div className="improve-btn">
+          
               <button onClick={handleImprove} disabled = {loading ||(limit > 0 && usage >= limit )}>
                 Make it More Viral
               </button>
             </div>
-          </div>
         </div>
         {!result && !loading && (
           <div className="empty">

@@ -102,6 +102,13 @@ button:active{
   transform: scale(0.96);
 }
 
+.button-group{
+  display:flex;
+  gap:12px;
+  margin-top:20px;
+  margin-bottom:30px;
+}
+
 /* 📦 OUTPUT GRID */
 .output {
   margin-top: 40px;

@@ -224,12 +224,19 @@ function App() {
             Uses left:{Math.max(limit-usage,0)}/{limit || 0}
             </p>
 
-          <button
+          <div>
+            <button
             onClick={handleGenerate}
             disabled={loading || !text.trim() || (limit > 0 && usage >= limit)}
           >
             {loading ? <span className="spinner"></span> : "Generate Content"}
           </button>
+          <div className="improve-btn">
+              <button onClick={handleImprove} disabled = {loading ||(limit > 0 && usage >= limit )}>
+                Make it More Viral
+              </button>
+            </div>
+          </div>
         </div>
         {!result && !loading && (
           <div className="empty">
@@ -246,11 +253,7 @@ function App() {
             <span>Paste Your Transcript and generate in seconds</span>
           </div>
         )}
-        <div className="improve-btn">
-              <button onClick={handleImprove} disabled = {loading ||(limit > 0 && usage >= limit )}>
-                Make it More Viral
-              </button>
-            </div>
+        
 
         {loading && (
           <div className="output">

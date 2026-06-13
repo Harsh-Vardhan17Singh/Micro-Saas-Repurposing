@@ -185,6 +185,9 @@ function App() {
           <p className="subtitle">
             Turn podcasts,blog,videos and newsletters into ready-to-post social content in seconds.
           </p>
+          <p className="trust-line">
+            No signup • Free beta • AI-powered content repurposing
+           </p>
           <div>
             <div>⚡ 5 Formats</div>
             <div>🚀 ~10 sec Generation</div>
@@ -192,7 +195,7 @@ function App() {
           </div>
         </div>
         <div className="beta-badge">
-           🚀 Beta Launch
+           🚀 Free Beta Access
         </div>
 
         {/* 📝 INPUT SECTION */}

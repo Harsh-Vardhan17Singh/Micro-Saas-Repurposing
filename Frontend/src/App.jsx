@@ -186,6 +186,7 @@ function App() {
               🚀 Free Beta Access
 
             </div>
+            <h2 className="brand-name">EchoStream</h2>
             <h1>
               Turn One Blog Into
               <br />
@@ -209,7 +210,7 @@ function App() {
              className="demo-btn"
              onClick={() =>
               setText(
-                "AI is transforming startups by helping founders automate repetitive work, improve productivity and sclae faster."
+                "AI is transforming startups by helping founders automate repetitive work, improve productivity and scale faster."
               )
              }
              >
@@ -232,7 +233,7 @@ function App() {
           </div>
         </div>
         <div className="social-proof">
-          Used by creators, students and startup founders.
+          Built for creators, students and startup founders.
         </div>
         
 

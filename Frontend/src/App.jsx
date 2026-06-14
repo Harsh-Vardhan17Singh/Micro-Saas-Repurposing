@@ -180,23 +180,58 @@ function App() {
       <div className="container">
 
         {/* 🔥 HEADER */}
-        <div className="header">
-          <h1 className="gradient-text">EchoStream</h1>
-          <p className="subtitle">
-            Turn podcasts,blog,videos and newsletters into ready-to-post social content in seconds.
-          </p>
-          <p className="trust-line">
-            No signup • Free beta • AI-powered content repurposing
-           </p>
-          <div>
-            <div>⚡ 5 Formats</div>
-            <div>🚀 ~10 sec Generation</div>
-            <div>🤖 AI Powered</div>
+        <div className="hero">
+          <div className="hero-left">
+            <div className="beta-badge">
+              🚀 Free Beta Access
+
+            </div>
+            <h1>
+              Turn One Blog Into
+              <br />
+              Twitter Threads,
+              LinkedIn Posts &
+              Emails
+            </h1>
+            <p>
+              Repurpose blogs, podcasts, videos and newsletters
+              into platform-ready content in seconds.
+            </p>
+            <p>
+               No signup • 3 Free Generations • AI Powered
+            </p>
+            <div>
+              <div>⚡ 5 Formats</div>
+              <div>🚀 ~10s Generation</div>
+              <div>🤖 AI Powered</div>
+            </div>
+            <button 
+             className="demo-btn"
+             onClick={() =>
+              setText(
+                "AI is transforming startups by helping founders automate repetitive work, improve productivity and sclae faster."
+              )
+             }
+             >
+              Try Demo
+            </button>
+          </div>
+          <div className="hero-right">
+            <div className="flow-card">
+              <div>Transcript</div>
+              <span>↓</span>
+               <div>🤖 AI Processing</div>
+               <span>↓</span>
+
+               <div>🐦 Twitter Thread</div>
+               <div>💼 LinkedIn Post</div>
+               <div>📸 Instagram Caption</div>
+               <div>📧 Email</div>
+
+            </div>
           </div>
         </div>
-        <div className="beta-badge">
-           🚀 Free Beta Access
-        </div>
+        
 
         {/* 📝 INPUT SECTION */}
         <div className="input-section">
@@ -228,7 +263,7 @@ function App() {
            
           <p className="char-count">{text.length} characters</p>
 
-          <p className="usage">Free Limit : 3 generation</p>
+          <p className="usage">✨ 3 Free Generations Daily</p>
 
           <p className="usage">
             Uses left:{Math.max(limit-usage,0)}/{limit || 0}

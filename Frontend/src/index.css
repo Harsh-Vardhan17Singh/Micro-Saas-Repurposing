@@ -420,3 +420,67 @@ pre {
  font-size:14px;
  margin-top:10px;
 }
+.hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:50px;
+  margin-bottom:40px;
+}
+
+.hero-left{
+  flex:1;
+}
+
+.hero-right{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+.flow-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:30px;
+  width:320px;
+  text-align:center;
+}
+
+.flow-card div{
+  margin:12px 0;
+  font-weight:600;
+}
+
+.flow-card span{
+  display:block;
+  color:#8b5cf6;
+  font-size:20px;
+}
+
+.demo-btn{
+  margin-top:20px;
+}
+
+.trust-line{
+  color:#94a3b8;
+  margin-top:10px;
+  margin-bottom:20px;
+}
+
+@media(max-width:900px){
+  .hero{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .hero-right{
+    width:100%;
+  }
+
+  .flow-card{
+    width:100%;
+    max-width:350px;
+  }
+}

@@ -231,6 +231,9 @@ function App() {
             </div>
           </div>
         </div>
+        <div className="social-proof">
+          Used by creators, students and startup founders.
+        </div>
         
 
         {/* 📝 INPUT SECTION */}

@@ -1,7 +1,13 @@
 from dotenv import load_dotenv
+from services.prompts import (
+    social_prompt,
+    email_prompt,
+    instagram_prompt
+)
 import os
 import google.generativeai as genai
 import json
+
 
 load_dotenv()
 
@@ -13,64 +19,16 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 def generate_content(text, tone, content_format):
-    prompt = f"""
-You are a Strict API.
-
-Return ONLY valid JSON.
-
-If format == "social":
-{{
-  "twitter": [
-    "tweet1",
-    "tweet2",
-    "tweet3",
-    "tweet4",
-    "tweet5"
-  ],
-  "linkedin": "linkedin post",
-  "summary": "summary"
-}}
-
-RULES FOR TWITTER:
-- Generate exactly 5 tweets
-- All tweets must be different
-- First tweet must be a hook
-- Last tweet must contain a CTA
-- No placeholders
-- No repeated content
-
----------------------------
-
-If format == "email":
-{{
-  "subject": "email subject",
-  "body": "email body"
-}}
-
----------------------------
-
-If format == "instagram":
-{{
-  "caption": "instagram caption",
-  "hashtags": "#tag1 #tag2 #tag3 #tag4 #tag5"
-}}
-
-RULES:
-- Return valid JSON only
-- No markdown
-- No explanation
-- No headings
-- Follow selected format exactly
-
-FORMAT:
-{content_format}
-
-TONE:
-{tone}
-
-CONTENT:
-{text}
-"""
+    if content_format == "social":
+        prompt = social_prompt(text,tone)
+    elif content_format == "email":
+        prompt = email_prompt(text,tone)
+    elif content_format == "instagram":
+        prompt = instagram_prompt(text,tone)
+    else:
+        return {
+            "error":"Unsupported format"
+        }
 
     try:
         response = model.generate_content(

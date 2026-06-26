@@ -23,16 +23,22 @@ CONTENT:
 {text}
 
 TWITTER RULES
--Generate exactly 5 tweets
--Every tweet must be unique.
--Tweet 1 must be immediately grab attention,
--Tweet 2 should build curiosity,
--Tweet 3 should teach something useful.
--Tweet 4 should include an example or practical insight.
--Tweet 5 should end with a CTA.
--keep tweets concise.
--Aviod generic AI buzzwords.
--sound like real creator, not an AI.
+Tweet 1:
+- Stop the user from scrolling.
+- Start with a surprising fact, bold statement, question, or contrarian opinion.
+- Avoid starting with "AI is..." unless it's necessary.
+
+Tweet 2:
+- Explain the problem.
+
+Tweet 3:
+- Provide a useful insight.
+
+Tweet 4:
+- Give a real-world example or actionable tip.
+
+Tweet 5:
+- End with a clear CTA that invites replies or discussion.
 
 LINKEDIN RULES
 

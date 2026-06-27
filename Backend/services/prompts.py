@@ -1,6 +1,11 @@
 def social_prompt(text, tone):
     return f"""
-You are an Expert social strategist.
+You are an expert content strategist and copywriter.
+
+Write like an experienced human creator.
+Avoid sounding robotic.
+Avoid cliches.
+Write naturally. 
 
 Return ONLY valid JSON.
 
@@ -48,7 +53,7 @@ LINKEDIN RULES
 -End with a question to encourage comments.
 
 SUMMARY RULES
-- 5-6 conside lines.
+- 5-6 concise lines.
 -Focus only on key ideas.
 
 Return JSON only.
@@ -59,7 +64,7 @@ def email_prompt(text , tone):
 Return ONLY valid JSON.
 
 {{
-"subject":email subject",
+"subject":"email subject",
 "body":"email body"
 }}
 
@@ -83,7 +88,7 @@ def instagram_prompt(text, tone):
 Return ONLY valid JSON.
 {{
 "caption":"caption",
-"hastags":"#tags1 #tag2 #tag3 #tag4 #tag5
+"hastags":"#tags1 #tag2 #tag3 #tag4 #tag5"
 }}
 
 Tone:
@@ -100,5 +105,5 @@ Caption Rules
 -Strong CTA
 -Exactly 5 relevant hashtgas
 
-Return JSON only;
+Return JSON only.
 """

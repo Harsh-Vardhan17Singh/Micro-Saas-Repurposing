@@ -1,13 +1,13 @@
 from dotenv import load_dotenv
+import os
+import json
+import google.generativeai as genai
+
 from services.prompts import (
     social_prompt,
     email_prompt,
     instagram_prompt
 )
-import os
-import google.generativeai as genai
-import json
-
 
 load_dotenv()
 
@@ -19,36 +19,41 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 def generate_content(text, tone, content_format):
-    if content_format == "social":
-        prompt = social_prompt(text,tone)
-    elif content_format == "email":
-        prompt = email_prompt(text,tone)
-    elif content_format == "instagram":
-        prompt = instagram_prompt(text,tone)
-    else:
+
+    prompt_builders = {
+        "social": social_prompt,
+        "email": email_prompt,
+        "instagram": instagram_prompt
+    }
+
+    if content_format not in prompt_builders:
         return {
-            "error":"Unsupported format"
+            "error": "Unsupported format"
         }
 
+    prompt = prompt_builders[content_format](text, tone)
+
     try:
+
         response = model.generate_content(
             prompt,
             generation_config={
-                "response_mime_type":"application/json"
+                "response_mime_type": "application/json"
             }
-            )
+        )
 
         reply = response.text.strip()
+
         reply = (
             reply.replace("```json", "")
-            .replace("```", "")
-            .strip()
+                 .replace("```", "")
+                 .strip()
         )
 
         parsed = json.loads(reply)
 
-        # Validation for social format
         if content_format == "social":
+
             if "twitter" not in parsed:
                 return {
                     "error": "Missing twitter array"
@@ -56,24 +61,52 @@ def generate_content(text, tone, content_format):
 
             if not isinstance(parsed["twitter"], list):
                 return {
-                    "error": "Twitter field is not a list"
+                    "error": "Twitter is not a list"
                 }
 
             if len(parsed["twitter"]) != 5:
                 return {
-                    "error": "AI did not generate exactly 5 tweets",
+                    "error": "Expected exactly 5 tweets",
+                    "raw": parsed
+                }
+
+            if "linkedin" not in parsed:
+                return {
+                    "error": "Missing linkedin post"
+                }
+
+            if "summary" not in parsed:
+                return {
+                    "error": "Missing summary"
+                }
+
+        elif content_format == "email":
+
+            if "subject" not in parsed or "body" not in parsed:
+                return {
+                    "error": "Invalid email response",
+                    "raw": parsed
+                }
+
+        elif content_format == "instagram":
+
+            if "caption" not in parsed or "hashtags" not in parsed:
+                return {
+                    "error": "Invalid instagram response",
                     "raw": parsed
                 }
 
         return parsed
 
     except json.JSONDecodeError:
+
         return {
-            "error": "Invalid JSON returned by model",
+            "error": "Invalid JSON returned by AI",
             "raw": reply
         }
 
     except Exception as e:
+
         return {
             "error": str(e)
         }

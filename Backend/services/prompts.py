@@ -2,23 +2,18 @@ def social_prompt(text, tone):
     return f"""
 You are an expert content strategist and copywriter.
 
-Write like an experienced human creator.
-Avoid sounding robotic.
-Avoid cliches.
-Write naturally. 
-
 Return ONLY valid JSON.
 
 {{
-"twitter":[
-"tweet1",
-"tweet2",
-"tweet3",
-"tweet4",
-"tweet5"
-],
-"linkedin":"linkedin post",
-"summary":"summary"
+  "twitter":[
+    "tweet1",
+    "tweet2",
+    "tweet3",
+    "tweet4",
+    "tweet5"
+  ],
+  "linkedin":"linkedin post",
+  "summary":"summary"
 }}
 
 TONE:
@@ -28,82 +23,98 @@ CONTENT:
 {text}
 
 TWITTER RULES
-Tweet 1:
-- Stop the user from scrolling.
-- Start with a surprising fact, bold statement, question, or contrarian opinion.
-- Avoid starting with "AI is..." unless it's necessary.
 
-Tweet 2:
-- Explain the problem.
+Tweet 1
+- Strong hook
+- Make people stop scrolling
+- Use curiosity, surprise or a bold opinion
 
-Tweet 3:
-- Provide a useful insight.
+Tweet 2
+- Explain the problem
 
-Tweet 4:
-- Give a real-world example or actionable tip.
+Tweet 3
+- Give valuable insight
 
-Tweet 5:
-- End with a clear CTA that invites replies or discussion.
+Tweet 4
+- Give an actionable example or tip
+
+Tweet 5
+- End with a CTA that encourages discussion
+
+GENERAL RULES
+
+- Exactly 5 tweets
+- No repeated ideas
+- Natural writing
+- No placeholders
+- No markdown
+- No numbering
 
 LINKEDIN RULES
 
--Start with a strong hook.
--Write in short paragraphs
--Provide actionable insights.
--End with a question to encourage comments.
+- Start with a hook
+- Short readable paragraphs
+- Actionable advice
+- Professional tone
+- End with a question
 
 SUMMARY RULES
-- 5-6 concise lines.
--Focus only on key ideas.
 
-Return JSON only.
+- 5-6 concise lines
+- Focus only on important ideas
+
+Return ONLY valid JSON.
 """
 
-def email_prompt(text , tone):
+
+def email_prompt(text, tone):
     return f"""
 Return ONLY valid JSON.
 
 {{
-"subject":"email subject",
-"body":"email body"
+  "subject":"email subject",
+  "body":"email body"
 }}
 
-Tone:
+TONE:
 {tone}
 
-Content:
+CONTENT:
 {text}
 
-Write a professional email with:
--strong subject
--engaging introduction
--valuable body
--clear ending
+Write a professional email with
 
-Return JSON only.
+- Strong subject
+- Engaging introduction
+- Valuable body
+- Clear conclusion
+
+Return ONLY valid JSON.
 """
+
 
 def instagram_prompt(text, tone):
     return f"""
 Return ONLY valid JSON.
+
 {{
-"caption":"caption",
-"hastags":"#tags1 #tag2 #tag3 #tag4 #tag5"
+  "caption":"instagram caption",
+  "hashtags":"#tag1 #tag2 #tag3 #tag4 #tag5"
 }}
 
-Tone:
+TONE:
 {tone}
 
-Content:
+CONTENT:
 {text}
 
 Caption Rules
 
--Engaging first Line
--short paragraphs
--Use emojis Naturally
--Strong CTA
--Exactly 5 relevant hashtgas
+- Strong opening
+- Short paragraphs
+- Natural emojis
+- Strong CTA
+- Exactly 5 hashtags
 
-Return JSON only.
+Return ONLY valid JSON.
 """

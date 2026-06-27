@@ -18,7 +18,10 @@ genai.configure(
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 
-def generate_content(text, tone, content_format):
+def generate_content(text,
+                      tone,
+                     content_format ,
+                     instructions=""):
 
     prompt_builders = {
         "social": social_prompt,

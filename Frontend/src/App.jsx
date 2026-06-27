@@ -15,6 +15,7 @@ function App() {
   const [history,setHistory] = useState([]);
   const[activeTab,setActiveTab] = useState("twitter")
   const[format,setFormat] = useState("social")
+  const[instruction, setInstruction] = useState("");
   const[userId,setUserId] = useState("");
   const[usage, setUsage] = useState(0)
   const[limit,setLimit] = useState(0)
@@ -44,6 +45,7 @@ function App() {
           text,
           tone:"viral", //force viral
           format,
+          instructions,
           userId,
         }),
       });
@@ -127,7 +129,8 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text, tone, format, userId}),
+      body: JSON.stringify({ text, tone, format,
+        instructions, userId}),
     });
 
     const data = await res.json();
@@ -263,6 +266,13 @@ function App() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste your transcript here..."
+          />
+          <textarea
+            className="instruction-box"
+            placeholder="optional:e.g. Write like Alex Hormozi, make it humorous, target startup founder..."
+            value={instructions}
+            onChange={(e) => setInstructions(e.target.value)}
+
           />
            
           <p className="char-count">{text.length} characters</p>

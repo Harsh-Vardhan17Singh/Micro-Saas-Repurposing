@@ -58,13 +58,15 @@ def generate():
 
     format = data.get("format","social")
     
+    instructions = data.get("instructions","")
+    
     
     #2.Print Data
     print(f"[REQUEST] user ={user_id} Usage: {usage}/{FREE_LIMIT}")
 
     #3. AI CALL
     try:
-     ai_output = generate_content(text,tone,format)
+     ai_output = generate_content(text,tone,format, instructions)
     except Exception as e:
      print("AI ERROR:",str(e))
      return jsonify({"error":"AI service failed"}),500

@@ -1,4 +1,4 @@
-def social_prompt(text, tone):
+def social_prompt(text, tone, instructions):
     return f"""
 You are an expert content strategist and copywriter.
 
@@ -67,7 +67,7 @@ Return ONLY valid JSON.
 """
 
 
-def email_prompt(text, tone):
+def email_prompt(text, tone, instructions):
     return f"""
 Return ONLY valid JSON.
 
@@ -93,7 +93,7 @@ Return ONLY valid JSON.
 """
 
 
-def instagram_prompt(text, tone):
+def instagram_prompt(text, tone, instructions):
     return f"""
 Return ONLY valid JSON.
 

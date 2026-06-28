@@ -34,7 +34,7 @@ def generate_content(text,
             "error": "Unsupported format"
         }
 
-    prompt = prompt_builders[content_format](text, tone)
+    prompt = prompt_builders[content_format](text, tone, instructions)
 
     try:
 

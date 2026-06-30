@@ -1,4 +1,5 @@
 from flask import Flask,request,jsonify
+import os
 from services.ai_service import generate_content
 from flask_cors import CORS
 from database import init_db, get_user, create_user,update_usage
@@ -8,7 +9,7 @@ CORS(app)
 
 init_db()
 
-FREE_LIMIT = 100 
+FREE_LIMIT = int(os.getenv("FREE_LIMIT",100)) 
 
 @app.route("/")
 def home():

@@ -12,10 +12,12 @@ function App() {
   const [toast,setToast] = useState("")
   const [copied,setCopied] = useState("")
   const[tone,setTone] = useState("professional")
+  const [brandVoice, setBrandVoice] = useState("professional")
+  const [audience, setAudience] = useState("Startup  Founders")
   const [history,setHistory] = useState([]);
   const[activeTab,setActiveTab] = useState("twitter")
   const[format,setFormat] = useState("social")
-  const[instruction, setInstruction] = useState("");
+  const[instructions, setInstructions] = useState("");
   const[userId,setUserId] = useState("");
   const[usage, setUsage] = useState(0)
   const[limit,setLimit] = useState(0)
@@ -46,6 +48,8 @@ function App() {
           tone:"viral", //force viral
           format,
           instructions,
+          brandVoice,
+          audience,
           userId,
         }),
       });
@@ -129,8 +133,13 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text, tone, format,
-        instructions, userId}),
+      body: JSON.stringify({ text,
+         tone,
+         format,
+         instructions,
+         brandVoice,
+         audience,
+         userId}),
     });
 
     const data = await res.json();
@@ -242,13 +251,35 @@ function App() {
 
         {/* 📝 INPUT SECTION */}
         <div className="input-section">
-          <select className="tone-select" 
-          value = {tone}
-          onChange={(e) => setTone(e.target.value)}>
-            <option value="professional">Professional</option>
-            <option value="casual">Casual</option>
-            <option value="viral">Viral</option>
+          <select 
+           className="tone-select"
+            value={brandVoice}
+            onChange={(e) => setBrandVoice(e.target.value)}
+            >
+              <option value="professional">Professional</option>
+              <option value="founder">Founder</option>
+              <option value="storytelling">Storytelling</option>
+              <option value="marketing">Marketing</option>
+              <option value="educational">Educational</option>
+              <option value="minimal">Minimal</option>
           </select>
+
+          <select 
+           className="tone-select" 
+           value={audience}
+           onChange={(e) => setAudience(e.target.value)}
+           >
+            <option value="Startup Founder">Startup Founder</option>
+            <option value="Business Owner">Business Owners</option>
+            <option value="Marketing Agencies">Marketing Agencies</option>
+            <option value="Students">Students</option>
+            <option value="Developers">Developers</option>
+            <option value="Recruiters">Recruiters</option>
+
+          </select>
+
+
+
           <select 
             value = {format}
             onChange = {(e) => {

@@ -60,6 +60,10 @@ def generate():
     format = data.get("format","social")
     
     instructions = data.get("instructions","")
+
+    brand_voice = data.get("brandVoice", "professional")
+
+    audience = data.get("audience","Startup Founders")
     
     
     #2.Print Data
@@ -67,7 +71,12 @@ def generate():
 
     #3. AI CALL
     try:
-     ai_output = generate_content(text,tone,format, instructions)
+     ai_output = generate_content(text,
+                                  tone,
+                                  format, instructions,
+                                  brand_voice,
+                                  audience
+                                  )
     except Exception as e:
      print("AI ERROR:",str(e))
      return jsonify({"error":"AI service failed"}),500

@@ -21,7 +21,10 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 def generate_content(text,
                       tone,
                      content_format ,
-                     instructions=""):
+                     instructions="",
+                     brand_voice="professional",
+                     audience="Startup Founders"
+                     ):
 
     prompt_builders = {
         "social": social_prompt,
@@ -34,7 +37,13 @@ def generate_content(text,
             "error": "Unsupported format"
         }
 
-    prompt = prompt_builders[content_format](text, tone, instructions)
+    prompt = prompt_builders[content_format](
+        text, 
+        tone, 
+        instructions,
+        brand_voice,
+        audience
+        )
 
     try:
 

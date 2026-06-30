@@ -1,4 +1,5 @@
-def social_prompt(text, tone, instructions):
+def social_prompt(text, tone, instructions,
+                  brand_voice,audience):
     return f"""
 You are an expert content strategist and copywriter.
 
@@ -19,8 +20,17 @@ Return ONLY valid JSON.
 TONE:
 {tone}
 
+BRAND VOICE:
+{brand_voice}
+
+TARGET AUDIENCE:
+{audience}
+
 CONTENT:
 {text}
+
+ADDITIONAL INSTRUCTIONS:
+{instructions if instructions else "None"}
 
 TWITTER RULES
 
@@ -40,6 +50,38 @@ Tweet 4
 
 Tweet 5
 - End with a CTA that encourages discussion
+
+BRAND VOICE RULES
+
+Professional
+-clear
+-credible
+-corporate
+
+Founder
+-opinionated
+-Bold
+-personal experience
+-Strong hooks
+
+StoryTelling
+-Narrative
+-emotional
+-build Curosity
+
+Marketing
+-Benefit-driven
+-persuasive
+-Action-oriented
+
+Educational
+-Teach concept simply
+-Practical examples
+
+Minimal
+-very concise
+-short sentences
+
 
 GENERAL RULES
 
@@ -67,7 +109,8 @@ Return ONLY valid JSON.
 """
 
 
-def email_prompt(text, tone, instructions):
+def email_prompt(text, tone, instructions,
+                 brand_voice,audience):
     return f"""
 Return ONLY valid JSON.
 
@@ -79,8 +122,17 @@ Return ONLY valid JSON.
 TONE:
 {tone}
 
+BRAND VOICE:
+{brand_voice}
+
+TARGET AUDIENCE:
+{audience}
+
 CONTENT:
 {text}
+
+ADDITIONAL INSTRUCTIONS:
+{instructions if instructions else "None"}
 
 Write a professional email with
 
@@ -93,7 +145,8 @@ Return ONLY valid JSON.
 """
 
 
-def instagram_prompt(text, tone, instructions):
+def instagram_prompt(text, tone, instructions,
+                     brand_voice,audience):
     return f"""
 Return ONLY valid JSON.
 
@@ -105,8 +158,17 @@ Return ONLY valid JSON.
 TONE:
 {tone}
 
+BRAND VOICE:
+{brand_voice}
+
+TARGET AUDIENCE:
+{audience}
+
 CONTENT:
 {text}
+
+ADDITIONAL INSTRUCTIONS:
+{instructions if instructions else "None"}
 
 Caption Rules
 

@@ -298,6 +298,10 @@ function App() {
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste your transcript here..."
           />
+
+          <label className="field-title">
+            Additional Instruction(Optional)
+          </label>
           <textarea
             className="instruction-box"
             placeholder="optional:e.g. Write like Alex Hormozi, make it humorous, target startup founder..."

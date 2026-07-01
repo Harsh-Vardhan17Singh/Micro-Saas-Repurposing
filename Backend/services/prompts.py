@@ -82,6 +82,32 @@ Minimal
 -very concise
 -short sentences
 
+TARGET AUDIENCE RULES
+
+Startup Founders
+-Focus in growth , funding and productivity.
+-Use business language
+-Mention Scaling and execution where relevant.
+
+Business Owners
+-Focus on revenue, customers and efficiency.
+-Give practical business advice.
+
+Marketing Agencies
+-focus on campaigns, ROI , engagement and client results.
+-Use Marketing terminology naturally.
+
+Students
+-Use Simple Language.
+-Explain ideas clearly with realtable examples.
+
+Developers
+-Include technical examples when appropriate.
+-Avoid unnecessary marketing language.
+
+Recruiters
+-Focus on hiring, employers branding and talent acquisition.
+
 
 GENERAL RULES
 

@@ -3,6 +3,15 @@ def social_prompt(text, tone, instructions,
     return f"""
 You are an expert content strategist and copywriter.
 
+QUALITY RULES
+
+- Never sound like AI.
+-Avoid generic phrases.
+-prefer specific examples over vagur statements.
+-Use natural human language.
+-do not repeat ideas.
+-Make every sentences valuable 
+
 Return ONLY valid JSON.
 
 {{
@@ -59,26 +68,32 @@ Professional
 -corporate
 
 Founder
--opinionated
--Bold
--personal experience
--Strong hooks
+- Write like an experienced startup founder.
+- Be opinionated and confident.
+- Share practical lessons.
+- Use bold hooks.
+- Sound authentic, not corporate.
+- Strong hooks
 
 StoryTelling
+
 -Narrative
 -emotional
 -build Curosity
 
 Marketing
+
 -Benefit-driven
 -persuasive
 -Action-oriented
 
 Educational
+
 -Teach concept simply
 -Practical examples
 
 Minimal
+
 -very concise
 -short sentences
 

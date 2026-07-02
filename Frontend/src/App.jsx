@@ -187,6 +187,18 @@ function App() {
   }, 100);
 };
 
+const charCount = text.length
+
+const wordCount = text
+   .trim()
+   .split(/\s+/)
+   .filter(Boolean).length
+
+const readingTime = Math.max(
+  1,
+  Math.ceil(wordCount / 200)
+) 
+
   return (
     <div className="wrapper">
       <div className="container">
@@ -310,7 +322,22 @@ function App() {
 
           />
            
-          <p className="char-count">{text.length} characters</p>
+          <div>
+            <div>
+              <strong>{charCount}</strong>
+              <span>Characters</span>
+            </div>
+
+            <div>
+              <strong>{wordCount}</strong>
+              <span>Words</span>
+            </div>
+
+            <div>
+              <strong>{readingTime}</strong>
+              <span>Read Time</span>
+            </div>
+          </div>
 
           <p className="usage">✨ 3 Free Generations Daily</p>
 

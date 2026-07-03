@@ -1,6 +1,6 @@
 # 🚀 EchoStream - AI Powered Content Repurposing SaaS
 
-EchoStream is an AI-powered Micro SaaS application that transforms long-form content into platform-specific content in seconds.
+EchoStream is an AI-powered Micro SaaS application that transforms long content into platform-specific content in seconds.
 
 Users can generate:
 

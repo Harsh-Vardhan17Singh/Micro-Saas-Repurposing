@@ -52,3 +52,25 @@ def calculate_content_score(result):
         hook += 10
 
     score["hook"] = min(hook, 100)
+
+    # --------------------------
+    # Readability
+    # --------------------------
+
+    words = text.split()
+
+    avg_sentence = len(words) / max(
+        1,
+        len(re.split(r"[.!?]", text))
+    )
+
+    readability = 100
+
+    if avg_sentence > 25:
+        readability -= 20
+
+    if avg_sentence > 35:
+        readability -= 20
+
+    score["readability"] = max(readability, 60)
+

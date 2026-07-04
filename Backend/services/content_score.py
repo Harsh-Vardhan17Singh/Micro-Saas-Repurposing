@@ -35,3 +35,20 @@ def calculate_content_score(result):
         text += result["summary"]
 
     text = text.strip()
+
+    # --------------------------
+    # Hook Score
+    # --------------------------
+
+    hook = 60
+
+    if text.startswith(("Why", "How", "What", "Imagine")):
+        hook += 20
+
+    if "?" in text[:120]:
+        hook += 10
+
+    if "!" in text[:120]:
+        hook += 10
+
+    score["hook"] = min(hook, 100)

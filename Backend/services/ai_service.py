@@ -1,3 +1,4 @@
+from services.content_score import calculate_content_score
 from dotenv import load_dotenv
 import os
 import json
@@ -108,6 +109,7 @@ def generate_content(text,
                     "raw": parsed
                 }
 
+        parsed["content_score"] = calculate_content_score(parsed)
         return parsed
 
     except json.JSONDecodeError:

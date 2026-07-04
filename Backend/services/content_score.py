@@ -119,4 +119,26 @@ def calculate_content_score(result):
 
     score["overall"] = overall
 
+    # --------------------------
+    # Feedback
+    # --------------------------
+
+    feedback = []
+
+    if score["hook"] > 80:
+        feedback.append("Strong opening hook")
+
+    if score["readability"] > 80:
+        feedback.append("Easy to read")
+
+    if score["cta"] > 80:
+        feedback.append("Strong call-to-action")
+
+    if score["engagement"] > 80:
+        feedback.append("High engagement potential")
+
+    score["feedback"] = feedback
+
+    return score
+
 

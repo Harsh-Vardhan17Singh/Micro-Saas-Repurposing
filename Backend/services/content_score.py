@@ -74,3 +74,49 @@ def calculate_content_score(result):
 
     score["readability"] = max(readability, 60)
 
+    # --------------------------
+    # CTA
+    # --------------------------
+
+    cta = 50
+
+    lower = text.lower()
+
+    for word in CTA_WORDS:
+        if word in lower:
+            cta += 8
+
+    score["cta"] = min(cta, 100)
+
+    # --------------------------
+    # Engagement
+    # --------------------------
+
+    engagement = 70
+
+    emojis = len(re.findall(r"[😀-🙏]", text))
+
+    engagement += min(emojis * 2, 10)
+
+    if "?" in text:
+        engagement += 10
+
+    if "story" in lower:
+        engagement += 5
+
+    score["engagement"] = min(engagement, 100)
+
+    # --------------------------
+    # Overall
+    # --------------------------
+
+    overall = (
+        score["hook"]
+        + score["readability"]
+        + score["cta"]
+        + score["engagement"]
+    ) // 4
+
+    score["overall"] = overall
+
+

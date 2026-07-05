@@ -22,7 +22,7 @@ The visual direction features absolute restraint, minimal typography, luxury gla
 - **Email Newsletters**: Campaigns formatted ready for distribution.
 - **Instagram Posts**: Structured captions and trending hashtag blocks.
 
-### 3. Interactive WebGL Backgrounds & Section Dividers
+### 3. Interactive Backgrounds & Section Dividers
 - **Ferrofluid Background**: An interactive WebGL particle mesh in the Hero and Footer sections, responding to global mouse coordinates for a fluid, tactile feel.
 - **DarkVeil Workspace Canvas**: Spans the Generative Workspace, overlaying CPPN waves behind active input fields.
 - **Silk Pricing Backdrop**: A vibrant violet silk shader that flows dynamically behind the pricing section.

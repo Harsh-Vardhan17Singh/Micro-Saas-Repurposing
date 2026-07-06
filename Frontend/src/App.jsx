@@ -1531,6 +1531,10 @@ function App() {
                       setResult(item.result);
                       setTone(item.tone);
                       setFormat(item.format);
+                      setBrandVoice(item.brandvoice || "professional");
+                      setAudience(item.audience || "Startuo Founder");
+                      SetInstruction(item.instruction || "")
+                      
                       if (resultRef.current) {
                         resultRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
                       }

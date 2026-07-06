@@ -394,7 +394,7 @@ function App() {
           time: new Date().toLocaleTimeString(),
           brandVoice,
           audience,
-          instruction,
+          instructions,
         },
         ...prev,
       ]);
@@ -1536,7 +1536,7 @@ function App() {
                       setFormat(item.format);
                       setBrandVoice(item.brandvoice || "professional");
                       setAudience(item.audience || "Startuo Founder");
-                      SetInstruction(item.instruction || "")
+                      setInstructions(item.instruction || "")
 
                       if (resultRef.current) {
                         resultRef.current.scrollIntoView({ behavior: "smooth", block: "start" });

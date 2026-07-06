@@ -915,10 +915,60 @@ function App() {
             <div className="output-glass-card">
               <div className="output-header-bar">
                 <h3 className="output-title">Outputs</h3>
+
+
                 <button className="premium-download-btn" onClick={handleDownload}>
                   <Download className="download-icon-lucide" /> Download Text Document
                 </button>
               </div>
+
+              {/* CONTENT SCORE HERE */}
+
+             {result?.content_score && (
+  <div className="content-score-card">
+    <div className="score-top">
+      <h3>AI Content Score</h3>
+      <span>{result.content_score.overall}/100</span>
+    </div>
+
+    <div className="score-bar">
+      <div
+        className="score-fill"
+        style={{
+          width: `${result.content_score.overall}%`,
+        }}
+      />
+    </div>
+
+    <div className="score-grid">
+      <div>
+        <small>Hook</small>
+        <h2>{result.content_score.hook}</h2>
+      </div>
+
+      <div>
+        <small>Readability</small>
+        <h2>{result.content_score.readability}</h2>
+      </div>
+
+      <div>
+        <small>CTA</small>
+        <h2>{result.content_score.cta}</h2>
+      </div>
+
+      <div>
+        <small>Engagement</small>
+        <h2>{result.content_score.engagement}</h2>
+      </div>
+    </div>
+
+    <div className="feedback-list">
+      {result.content_score.feedback.map((item, i) => (
+        <span key={i}>✓ {item}</span>
+      ))}
+    </div>
+  </div>
+)}
 
               <div className="output-tab-bar">
                 {format === "social" && (

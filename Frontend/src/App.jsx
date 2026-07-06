@@ -169,7 +169,6 @@ function App() {
   const resultRef = useRef(null);
   const [toast, setToast] = useState("");
   const [copied, setCopied] = useState("");
-  const [tone, setTone] = useState("professional");
   const [brandVoice, setBrandVoice] = useState("professional");
   const [audience, setAudience] = useState("Startup Founder");
   const [history, setHistory] = useState([]);
@@ -392,6 +391,9 @@ function App() {
           tone,
           format,
           time: new Date().toLocaleTimeString(),
+          brandVoice,
+          audience,
+          instruction,
         },
         ...prev,
       ]);
@@ -1534,7 +1536,7 @@ function App() {
                       setBrandVoice(item.brandvoice || "professional");
                       setAudience(item.audience || "Startuo Founder");
                       SetInstruction(item.instruction || "")
-                      
+
                       if (resultRef.current) {
                         resultRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
                       }

@@ -169,6 +169,7 @@ function App() {
   const resultRef = useRef(null);
   const [toast, setToast] = useState("");
   const [copied, setCopied] = useState("");
+  
   const [brandVoice, setBrandVoice] = useState("professional");
   const [audience, setAudience] = useState("Startup Founder");
   const [history, setHistory] = useState([]);

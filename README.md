@@ -14,7 +14,7 @@ The visual direction features absolute restraint, minimal typography, luxury gla
 - Secondary headlines styled with a premium metallic brushed-aluminum gradient (`linear-gradient(180deg, #E7EBF2 0%, #A7B0BE 100%)`).
 
 ### 2. Multi-Channel Content Repurposing
-- **Audio Transcript Parsing**: Converts complex source meetings, transcript text, or blog items.
+- **Audio Transcript Parsing**: Converts complex meetings, transcript text, or blog items.
 - **Social Media Packaging**:
   - Twitter Threads (rendered as card-based threads with selectable hook options).
   - LinkedIn Posts (curated professional formatting).

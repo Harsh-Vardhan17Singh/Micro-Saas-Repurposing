@@ -2,7 +2,6 @@
 
 EchoStream is a design-first, high-fidelity AI-powered Micro SaaS platform that transforms raw  content (audio transcripts, article assets) into high-end social threads, LinkedIn posts, and concise executive summaries in seconds.
 
-The visual direction features absolute restraint, minimal typography, luxury glassmorphic layouts, and smooth interactive WebGL particle.
 
 ---
 

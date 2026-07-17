@@ -32,7 +32,6 @@ EchoStream is a design-first, high-fidelity AI-powered Micro SaaS platform that 
 - The Hero Right workflow diagram floats continuously using Framer Motion.
 - Calculates dynamic mouse coordinates to tilt the centerpiece card container in a 3D perspective (X/Y axis rotation up to `4°`).
 - Connectors animates slow moving light pulses along 1px gradient paths.
-- Subtle backing radial light glow (`rgba(110,168,254,0.08)`) with `140px` blur creates deep visual hierarchy.
 
 ### 5. Custom Authentication System
 - Beautiful full-screen overlay for Login & Sign Up.
